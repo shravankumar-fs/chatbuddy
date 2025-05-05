@@ -7,13 +7,7 @@ interface OllamaRequest {
   model: 'llama3.2';
   messages: ChatMessage[];
 }
-interface OllamaResponse {
-  choices: { message: ChatMessage }[];
-}
-
 export async function POST(req: NextRequest) {
-  console.log('kk[Ollama] Request received:', req.method, req.url);
-
   let messages: ChatMessage[];
   try {
     ({ messages } = (await req.json()) as { messages: ChatMessage[] });
