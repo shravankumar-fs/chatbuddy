@@ -70,6 +70,17 @@ export default function Chat() {
     recognitionRef.current = recognition;
   }, [mutation]);
 
+  useEffect(() => {
+    if (!answer) return;
+    if (!('speechSynthesis' in window)) {
+      console.warn('Web Speech Synthesis not supported');
+      return;
+    }
+    const utterance = new window.SpeechSynthesisUtterance(answer);
+    utterance.lang = 'en-US';
+    window.speechSynthesis.speak(utterance);
+  }, [answer]);
+
   function handleAsk() {
     if (!question.trim()) return;
     setAnswer(null);
