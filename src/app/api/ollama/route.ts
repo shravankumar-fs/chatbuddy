@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 type ChatMessage = { role: 'system' | 'user'; content: string };
 
 interface OllamaRequest {
-  model: 'llama3.2';
+  model: 'llama3.2' | 'gemma3';
   messages: ChatMessage[];
 }
 export async function POST(req: NextRequest) {
@@ -20,7 +20,10 @@ export async function POST(req: NextRequest) {
     const resp = await fetch('http://localhost:11434/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ model: 'llama3.2', messages } as OllamaRequest),
+      body: JSON.stringify({
+        model: 'gemma3',
+        messages,
+      } as unknown as OllamaRequest),
     });
 
     if (!resp.ok) {
